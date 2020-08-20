@@ -18,7 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import Renderer from '../components/renderer'
-const noop = function() {}
+
+const noop = function() {
+}
 
 const nodeRingStrokeSize = 8
 
@@ -135,8 +137,8 @@ const nodeRing = new Renderer({
   onTick: noop
 })
 const nodeImage = new Renderer({
-  onGraphChange (selection, viz) {
-    const pattern = selection.selectAll('pattern').data(function (node) {
+  onGraphChange(selection, viz) {
+    const pattern = selection.selectAll('pattern').data(function(node) {
       if (node.propertyMap.image_url) {
         return [node]
       } else {
@@ -148,7 +150,7 @@ const nodeImage = new Renderer({
       .enter()
       .append('pattern')
       .attr({
-        id (id) {
+        id(id) {
           return 'img-fill-' + id.id
         },
         patternUnits: 'userSpaceOnUse',
@@ -175,7 +177,7 @@ const nodeImage = new Renderer({
 })
 
 const nodeImageFill = new Renderer({
-  onGraphChange (selection, viz) {
+  onGraphChange(selection, viz) {
     const filledCircle = selection
       .selectAll('circle.filled')
       .data(node => [node])
@@ -189,10 +191,10 @@ const nodeImageFill = new Renderer({
       .attr({
         cx: 0,
         cy: 0,
-        r (node) {
+        r(node) {
           return node.radius - 1
         },
-        fill (id) {
+        fill(id) {
           return 'url(#img-fill-' + id.id + ')'
         }
       })
@@ -296,6 +298,8 @@ node.push(nodeOutline)
 node.push(nodeIcon)
 node.push(nodeCaption)
 node.push(nodeRing)
+node.push(nodeImage)
+node.push(nodeImageFill)
 
 const relationship = []
 relationship.push(arrowPath)
