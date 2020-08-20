@@ -3,7 +3,7 @@ FROM node:12.18
 #WORKDIR /usr/src
 COPY . .
 RUN yarn
-RUN yarn start
+#RUN yarn start
 
 # Install dependencies
 #COPY package.json yarn.lock ./
