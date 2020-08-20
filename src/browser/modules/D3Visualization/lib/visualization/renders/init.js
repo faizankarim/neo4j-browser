@@ -127,7 +127,7 @@ const nodeRing = new Renderer({
 
     circles.attr({
       r(node) {
-        return node.radius + 50
+        return node.radius + 4
       }
     })
 
