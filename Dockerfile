@@ -1,8 +1,11 @@
 FROM node:12.18
 
 #WORKDIR /usr/src
-COPY . .
+RUN apt install git
+RUN git clone https://github.com/faizankarim/neo4j-browser.git
+WORKDIR neo4j-browser
 RUN yarn
+RUN yarn test
 #RUN yarn start
 
 # Install dependencies
