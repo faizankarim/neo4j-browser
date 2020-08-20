@@ -134,6 +134,74 @@ const nodeRing = new Renderer({
 
   onTick: noop
 })
+const nodeImage = new Renderer({
+  onGraphChange (selection, viz) {
+    const pattern = selection.selectAll('pattern').data(function (node) {
+      if (node.propertyMap.image_url) {
+        return [node]
+      } else {
+        return []
+      }
+    })
+
+    pattern
+      .enter()
+      .append('pattern')
+      .attr({
+        id (id) {
+          return 'img-fill-' + id.id
+        },
+        patternUnits: 'userSpaceOnUse',
+        x: -39,
+        y: -39,
+        height: 156,
+        width: 156
+      })
+
+      .append('image')
+      .attr('xlink:href', link => link.propertyMap.image_url)
+      .attr({
+        x: 0,
+        y: 0,
+        type: 'image/png',
+        height: 78,
+        width: 78
+      })
+
+    return pattern.exit().remove()
+  },
+
+  onTick: noop
+})
+
+const nodeImageFill = new Renderer({
+  onGraphChange (selection, viz) {
+    const filledCircle = selection
+      .selectAll('circle.filled')
+      .data(node => [node])
+
+    /*! console.log(filledCircle.data()) */
+
+    filledCircle
+      .enter()
+      .append('circle')
+      .classed('filled', true)
+      .attr({
+        cx: 0,
+        cy: 0,
+        r (node) {
+          return node.radius - 1
+        },
+        fill (id) {
+          return 'url(#img-fill-' + id.id + ')'
+        }
+      })
+
+    return filledCircle.exit().remove()
+  },
+
+  onTick: noop
+})
 
 const arrowPath = new Renderer({
   name: 'arrowPath',
